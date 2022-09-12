@@ -1,0 +1,66 @@
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local SpeedGUI = Instance.new("TextLabel")
+local UICorner = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(56, 56, 56)
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.Position = UDim2.new(0.8574453, 0, 0.886419773, 0)
+Frame.Size = UDim2.new(0, 162, 0, 52)
+Frame.Active = true
+Frame.Draggable = true
+
+SpeedGUI.Name = "SpeedGUI"
+SpeedGUI.Parent = Frame
+SpeedGUI.BackgroundColor3 = Color3.fromRGB(91, 91, 91)
+SpeedGUI.BorderColor3 = Color3.fromRGB(0, 0, 0)
+SpeedGUI.Position = UDim2.new(0.0493827164, 0, 0.0848999023, 0)
+SpeedGUI.Size = UDim2.new(0, 146, 0, 42)
+SpeedGUI.Font = Enum.Font.SourceSans
+SpeedGUI.Text = "0 studs/s"
+SpeedGUI.TextColor3 = Color3.fromRGB(253, 253, 253)
+SpeedGUI.TextScaled = true
+SpeedGUI.TextSize = 20.000
+SpeedGUI.TextStrokeTransparency = 0.990
+SpeedGUI.TextWrapped = true
+
+UICorner.CornerRadius = UDim.new(0.300000012, 0)
+UICorner.Parent = SpeedGUI
+
+UICorner_2.CornerRadius = UDim.new(0.300000012, 0)
+UICorner_2.Parent = Frame
+
+-- Scripts:
+
+local function FSCAV_fake_script() -- SpeedGUI.GUISpeedScript 
+	local script = Instance.new('LocalScript', SpeedGUI)
+
+	local players = game:GetService("Players")
+	local player = players.LocalPlayer
+	local character = player.Character or player.CharacterAdded:Wait()
+	local humanoid = character:WaitForChild("Humanoid")
+	
+	local label = script.Parent
+	
+	function roundingWithDecimals(x, decimals)
+		decimals = decimals or 0
+		return math.floor(x * 1^decimals) / 1^decimals
+	end
+	
+	humanoid.Running:Connect(function(speed)
+		speed = roundingWithDecimals((character.PrimaryPart.AssemblyLinearVelocity * Vector3.new(1, 0, 1)).Magnitude, 2)
+		label.Text = " "..speed.." studs/s"
+	end)
+	
+	
+end
+coroutine.wrap(FSCAV_fake_script)()
