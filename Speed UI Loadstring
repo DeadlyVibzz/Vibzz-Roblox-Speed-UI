@@ -42,25 +42,20 @@ UICorner_2.Parent = Frame
 -- Scripts:
 
 local function FSCAV_fake_script() -- SpeedGUI.GUISpeedScript 
-	local script = Instance.new('LocalScript', SpeedGUI)
+    local script = Instance.new('LocalScript', SpeedGUI)
+    local player = game:GetService("Players").LocalPlayer
 
-	local players = game:GetService("Players")
-	local player = players.LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
-	local humanoid = character:WaitForChild("Humanoid")
-	
-	local label = script.Parent
-	
-	function roundingWithDecimals(x, decimals)
-		decimals = decimals or 0
-		return math.floor(x)
-	end
-	
-	humanoid.Running:Connect(function(speed)
-		speed = roundingWithDecimals((character.PrimaryPart.AssemblyLinearVelocity * Vector3.new(1, 0, 1)).Magnitude, 2)
-		label.Text = " "..speed.." studs/s"
-	end)
-	
-	
+    local function onRunning(speed)
+        speed = math.abs(math.round(((player.Character or player.CharacterAdded:Wait()).PrimaryPart.AssemblyLinearVelocity * Vector3.new(1, 0, 1)).Magnitude, 2))
+        script.Parent.Text = " "..speed.." studs/s"
+    end
+
+    if player.Character then
+        player.Character:WaitForChild('Humanoid').Running:Connect(onRunning)
+    end
+    
+    player.CharacterAdded:Connect(function(character)
+        character:WaitForChild("Humanoid").Running:Connect(onRunning)
+    end)
 end
 coroutine.wrap(FSCAV_fake_script)()
