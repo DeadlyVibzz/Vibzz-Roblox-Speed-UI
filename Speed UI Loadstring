@@ -40,6 +40,7 @@ UICorner_2.CornerRadius = UDim.new(0.300000012, 0)
 UICorner_2.Parent = Frame
 
 -- Scripts:
+-- Thanks to winter_#9259 for help with code--
 
 local function FSCAV_fake_script() -- SpeedGUI.GUISpeedScript 
     local script = Instance.new('LocalScript', SpeedGUI)
