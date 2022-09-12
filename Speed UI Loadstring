@@ -53,7 +53,7 @@ local function FSCAV_fake_script() -- SpeedGUI.GUISpeedScript
 	
 	function roundingWithDecimals(x, decimals)
 		decimals = decimals or 0
-		return math.floor(x * 1^decimals) / 1^decimals
+		return math.floor(x)
 	end
 	
 	humanoid.Running:Connect(function(speed)
